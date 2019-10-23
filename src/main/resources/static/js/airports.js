@@ -1,4 +1,4 @@
-axios.get('https://dashboard.heroku.com/apps/peaceful-hollows-83852/airports/berlin')
+axios.get('https://peaceful-hollows-83852.herokuapp.com/airports/berlin')
     .then(response => {
         mydata = response.data;
         mydata = mydata._embedded.userList;
