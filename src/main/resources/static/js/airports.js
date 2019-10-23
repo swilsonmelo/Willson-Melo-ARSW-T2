@@ -1,5 +1,6 @@
 axios.get('https://peaceful-hollows-83852.herokuapp.com/airports/berlin')
     .then(response => {
+        console.log(response)
         mydata = response.data;
         mydata = mydata._embedded.userList;
         // $('#table1').bootstrapTable({
