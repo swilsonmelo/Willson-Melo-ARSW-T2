@@ -1,23 +1,30 @@
-axios.get('https://peaceful-hollows-83852.herokuapp.com/airports/berlin')
-    .then(response => {
-        console.log(response)
-        mydata = response.data;
-        mydata = mydata._embedded.userList;
-        // $('#table1').bootstrapTable({
-        //     data: mydata
-        // });
-        console.log(mydata);
-        mydata.forEach(employee => {
-            $('#airportsTable').append(`
-                <tr>    
-                    <td>` + 1 + `</td>
-                    <td>` + 2 + `</td>
-                    <td>` + 3 + `</td>
-                    <td>` + 4 + `</td>
-                </tr>
-            `)
-        });
-    })
-    .catch(e => {
-        // Capturamos los errores
-    })
+
+
+var boton = document.getElementById('citySearch');
+boton.addEventListener('click', function () {
+
+    //https://peaceful-hollows-83852.herokuapp.com/airports/berlin
+    axios.get('https://peaceful-hollows-83852.herokuapp.com/airports/'+document.getElementById('cityName').value)
+        .then(response => {
+            console.log(response)
+            mydata = response.data;
+            // $('#table1').bootstrapTable({
+            //     data: mydata
+            // });
+            console.log(mydata);
+            mydata.forEach(airport => {
+                $('#airportsTable').append(`
+            <tr>    
+                <td>` + airport.code + `</td>
+                <td>` + airport.name + `</td>
+                <td>` + airport.location.latitude + `</td>
+                <td>` + airport.location.longitude + `</td>
+            </tr>
+        `)
+            });
+        })
+        .catch(e => {
+            // Capturamos los errores
+        })
+
+})

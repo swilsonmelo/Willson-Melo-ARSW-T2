@@ -41,16 +41,16 @@
             <form>
                 <!-- Default input -->
                 <label for="exampleForm2">Default input</label>
-                <input type="text" id="exampleForm2" class="form-control">
+                <input type="text" id="cityName" class="form-control">
 
-                <button type="submit" class="btn btn-primary mt-2">search</button>
+                <button  id="citySearch" class="btn btn-primary mt-2">search</button>
             </form>
         </div>
 
         <table id="airportsTable" class="table mt-3 mx-5 w-75 ">
             <thead class="thead-dark">
                 <tr>
-                    <th data-field="airportId" scope="col">airportId</th>
+                    <th data-field="airportId" scope="col">airporCode</th>
                     <th data-field="name" scope="col">name</th>
                     <th data-field="longitude" scope="col">longitude</th>
                     <th data-field="latitude" scope="col">latitude</th>
@@ -59,7 +59,7 @@
             </thead>
         </table>
 
-        <div class="mapa">
+        <div class="mapa mt-3 mx-5 w-75 ">
             <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
               src="https://www.openstreetmap.org/export/embed.html?bbox=-74.84024047851564%2C4.478541034828978%2C-73.69354248046876%2C5.070425745309509&amp;layer=mapnik"
               style="border: 1px solid black"></iframe><br /><small><a
