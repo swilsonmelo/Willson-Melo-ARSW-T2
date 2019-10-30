@@ -1,62 +1,39 @@
-app = (function () {
-    var map;
-    return {
-        initMap: function () {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 0, lng: 0 },
-                zoom: 8
-            });
-        },
+var map;
+function init() {
+    
+    // The overlay layer for our marker, with a simple diamond as symbol
+    var overlay = new OpenLayers.Layer.Vector('Overlay', {
+        styleMap: new OpenLayers.StyleMap({
+            externalGraphic: '../img/marker.png',
+            graphicWidth: 20, graphicHeight: 24, graphicYOffset: -24,
+            title: '${tooltip}'
+        })
+    });
 
-        asd: function () {
-            console.log("sss");
-        },
-        temp: function () {
-            var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/nearest?lng=-3.5&lat=40.5",
-                "method": "GET",
-                "headers": {
-                    "x-rapidapi-host": "cometari-airportsfinder-v1.p.rapidapi.com",
-                    "x-rapidapi-key": "263297421fmshd9a9ca080274e11p163de6jsnd448cee535e6"
-                }
-            }
+    // The location of our marker and popup. We usually think in geographic
+    // coordinates ('EPSG:4326'), but the map is projected ('EPSG:3857').
+    var myLocation = new OpenLayers.Geometry.Point(10.2, 48.9)
+        .transform('EPSG:4326', 'EPSG:3857');
 
-            $.ajax(settings).done(function (response) {
-                console.log(response.location.latitude);
-                console.log(response.location.longitude);
-                var lati = response.location.latitude;
-                var long = response.location.longitude;
-                var cambiaaaa = new google.maps.LatLng(lati, long);
-                map.setCenter(cambiaaaa);
-                var marker = new google.maps.Marker({
-                    position: cambiaaaa,
-                    title: "Hello World!"
-                });
-                marker.setMap(map);
-            });
+    // We add the marker with a tooltip text to the overlay
+    overlay.addFeatures([
+        new OpenLayers.Feature.Vector(myLocation, {tooltip: 'OpenLayers'})
+    ]);
 
-        },
-        temp2: function () {
+    // A popup with some information about our location
+    var popup = new OpenLayers.Popup.FramedCloud("Popup", 
+        myLocation.getBounds().getCenterLonLat(), null,
+        '<a target="_blank" href="http://openlayers.org/">We</a> ' +
+        'could be here.<br>Or elsewhere.', null,
+        true // <-- true if we want a close (X) button, false otherwise
+    );
 
-            var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/nearest?lng=-74.040068&lat=4.792130",
-                "method": "GET",
-                "headers": {
-                    "x-rapidapi-host": "cometari-airportsfinder-v1.p.rapidapi.com",
-                    "x-rapidapi-key": "3f3ba436e2mshe65d818a0931df4p148e49jsn81f8fdaa3e8f"
-                }
-            }
-
-            $.ajax(settings).done(function (response) {
-                console.log("temp2")
-                console.log(response);
-            });
-        }
-
-
-    }
-})();
+    // Finally we create the map
+    map = new OpenLayers.Map({
+        div: "map", projection: "EPSG:3857",
+        layers: [new OpenLayers.Layer.OSM(), overlay],
+        center: myLocation.getBounds().getCenterLonLat(), zoom: 15
+    });
+    // and add the popup to it.
+    map.addPopup(popup);
+}

@@ -10,21 +10,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/lib/OpenLayers.js"></script>
+    <style type="text/css">
+        html,
+        body,
+        #mapdiv {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+    </style>
     <style>
         .toggle.ios,
         .toggle-on.ios,
         .toggle-off.ios {
             border-radius: 20px;
         }
+
         .toggle.ios .toggle-handle {
             border-radius: 20px;
         }
     </style>
-    <style>
-        #loading {
-            display: none;
-        }
-    </style>
+    
     <title>Airporstfinder</title>
 </head>
 
@@ -43,7 +51,7 @@
                 <label for="exampleForm2">Default input</label>
                 <input type="text" id="cityName" class="form-control">
 
-                <button  id="citySearch" class="btn btn-primary mt-2">search</button>
+                <button id="citySearch" class="btn btn-primary mt-2">search</button>
             </form>
         </div>
 
@@ -57,17 +65,30 @@
                     <th data-field="latitude" scope="col">latitude</th>
 
                 </tr>
-                <tbody></tbody>
+            <tbody></tbody>
             </thead>
         </table>
 
-        <div class="mapa mt-3 mx-5 w-75 ">
-            <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-74.84024047851564%2C4.478541034828978%2C-73.69354248046876%2C5.070425745309509&amp;layer=mapnik"
-              style="border: 1px solid black"></iframe><br /><small><a
-                href="https://www.openstreetmap.org/#map=11/4.7745/-74.2669">View Larger Map</a></small>
-        </div>
 
+        <div id="mapdiv"></div>
+        <script>
+            map = new OpenLayers.Map("mapdiv");
+            map.addLayer(new OpenLayers.Layer.OSM());
+
+            var lonLat = new OpenLayers.LonLat(-0.1279688, 51.5077286)
+                .transform(
+                    new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                    map.getProjectionObject() // to Spherical Mercator Projection
+                );
+
+            var zoom = 16;
+
+            var markers = new OpenLayers.Layer.Markers("Markers");
+            map.addLayer(markers);
+            markers.addMarker(new OpenLayers.Marker(lonLat));
+            map.setCenter(lonLat, zoom);
+
+        </script>
 
     </div>
 
@@ -76,21 +97,21 @@
     <script>
         feather.replace()
     </script>
-       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-       crossorigin="anonymous"></script>
-   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-       crossorigin="anonymous"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-   <script>
-       feather.replace()
-   </script>
-   <script src="https://kit.fontawesome.com/817a453e0c.js" crossorigin="anonymous"></script>
-   <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.15.4/bootstrap-table.min.js"></script>
-   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-       <script src="js/airports.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script>
+        feather.replace()
+    </script>
+    <script src="https://kit.fontawesome.com/817a453e0c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.15.4/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/airports.js"></script>
 </body>
 
 
