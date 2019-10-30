@@ -4,9 +4,9 @@ var boton = document.getElementById('citySearch');
 boton.addEventListener('click', function (e) {
     e.preventDefault()
     
-    //https://peaceful-hollows-83852.herokuapp.com/airports/
+    //https://willson-melo-arsw-t2.herokuapp.com/airports/
     //http://localhost:8080/airports/
-    axios.get('https://peaceful-hollows-83852.herokuapp.com/airports/'+document.getElementById('cityName').value)
+    axios.get('https://willson-melo-arsw-t2.herokuapp.com/airports/'+document.getElementById('cityName').value)
         .then(response => {
             console.log(response)
             mydata = response.data;
