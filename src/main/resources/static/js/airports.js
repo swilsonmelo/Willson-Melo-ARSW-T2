@@ -1,10 +1,11 @@
 
 
 var boton = document.getElementById('citySearch');
-boton.addEventListener('click', function () {
-
-    //https://peaceful-hollows-83852.herokuapp.com/airports/berlin
-    axios.get('https://peaceful-hollows-83852.herokuapp.com/airports/'+document.getElementById('cityName').value)
+boton.addEventListener('click', function (e) {
+    e.preventDefault()
+    
+    //https://peaceful-hollows-83852.herokuapp.com/airports/
+    axios.get('http://localhost:8080/airports/'+document.getElementById('cityName').value)
         .then(response => {
             console.log(response)
             mydata = response.data;
@@ -12,9 +13,11 @@ boton.addEventListener('click', function () {
             //     data: mydata
             // });
             console.log(mydata);
+            $("#airportsTable tbody").empty();
             mydata.forEach(airport => {
-                $('#airportsTable').append(`
-            <tr>    
+                $('#airportsTable tbody').append(`
+            <tr>
+                <td>` + airport.city + `</td>    
                 <td>` + airport.code + `</td>
                 <td>` + airport.name + `</td>
                 <td>` + airport.location.latitude + `</td>
