@@ -5,7 +5,8 @@ boton.addEventListener('click', function (e) {
     e.preventDefault()
     
     //https://peaceful-hollows-83852.herokuapp.com/airports/
-    axios.get('http://localhost:8080/airports/'+document.getElementById('cityName').value)
+    //http://localhost:8080/airports/
+    axios.get('https://peaceful-hollows-83852.herokuapp.com/airports/'+document.getElementById('cityName').value)
         .then(response => {
             console.log(response)
             mydata = response.data;
